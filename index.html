@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+
+    <link rel="stylesheet" href="index.css" />
+    <title>Document</title>
+    <script src="target.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="targetContainer">
+            <div id="targetCounter">1 out of 6</div>
+            <div id="sketch"></div>
+            <!-- <div id="typingBox">0</div> -->
+            <input type="number" id="typingBox" name="fname" autofocus />
+            <!-- <div id="caret"></div> -->
+        </div>
+
+        <div id="resultsContainer">
+            Results
+            <div id="resultsList"></div>
+
+            <!-- <button id="newGameButton" onclick="newgame()">New Game</button> -->
+
+            <button id="newGameButton" onclick="newgame()">
+          <span class="shadow"></span>
+          <span class="edge"></span>
+          <span class="front text"> New Game </span>
+        </button>
+        </div>
+    </div>
+</body>
+
+</html>
