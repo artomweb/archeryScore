@@ -26,9 +26,9 @@ class Target {
         this.buffer.circle(0, 0, 320 * SF);
         this.buffer.fill("red");
         this.buffer.circle(0, 0, 235 * SF);
-        this.buffer.fill("yellow");
+        this.buffer.fill("gold");
         this.buffer.circle(0, 0, 150 * SF);
-        this.buffer.fill("yellow");
+        this.buffer.fill("gold");
         this.buffer.circle(0, 0, 75 * SF);
 
         // drawing the target circle score text
@@ -69,16 +69,18 @@ class Target {
 
             let score;
 
+            let tolerance = 3;
+
             // Calculating the score of the arrow using he diameter of the target circle + half of the radius of the arrow
-            if (r < (75 * SF) / 2 + arrowRadius / 2) {
+            if (r < (75 * SF) / 2 + arrowRadius / 2 + tolerance) {
                 score = 10;
-            } else if (r < (150 * SF) / 2 + arrowRadius / 2) {
+            } else if (r < (150 * SF) / 2 + arrowRadius / 2 + tolerance) {
                 score = 9;
-            } else if (r < (225 * SF) / 2 + arrowRadius / 2) {
+            } else if (r < (235 * SF) / 2 + arrowRadius / 2 + tolerance) {
                 score = 8;
-            } else if (r < (300 * SF) / 2 + arrowRadius / 2) {
+            } else if (r < (320 * SF) / 2 + arrowRadius / 2 + tolerance) {
                 score = 7;
-            } else if (r < (375 * SF) / 2 + arrowRadius / 2) {
+            } else if (r < (405 * SF) / 2 + arrowRadius / 2 + tolerance) {
                 score = 6;
             } else {
                 score = 5;
@@ -86,12 +88,14 @@ class Target {
 
             arrows.push({ vec: createVector(x, y), score, a, r });
 
+            console.log(score);
+
             totalScore += score;
         }
 
         this.totalScore = totalScore;
 
-        console.log("TOTAL SCORE:", totalScore);
+        // console.log("TOTAL SCORE:", totalScore);
 
         this.arrows = arrows;
     }
@@ -112,7 +116,7 @@ class Target {
             // noFill();
             this.buffer.fill(255);
             this.buffer.strokeWeight(1);
-            // noStroke();
+            this.buffer.noStroke();
             this.buffer.circle(x, y, arrowRadius);
         }
 

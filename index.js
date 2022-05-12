@@ -1,9 +1,12 @@
 let target;
 let targetInc = 1;
 const TARGET_SIZE = 600;
+const MAX_GAMES = 3;
 const thumbs = [];
 let buffer;
 let canvas;
+
+let showingResults = false;
 
 let userScores = [];
 
@@ -19,6 +22,9 @@ function setup() {
     target = new Target(width / 2, height / 2, TARGET_SIZE, buffer);
 
     target.calculateArrows(5);
+
+    let targetCounter = document.getElementById("targetCounter");
+    targetCounter.innerHTML = "1 out of " + MAX_GAMES;
 
     // noLoop();
 }
@@ -52,8 +58,10 @@ function submitGuess(g) {
     thumbs.push(buffer);
 
     targetInc++;
-    if (targetInc > 5) {
+    if (targetInc > MAX_GAMES) {
         targetInc = 0;
+
+        showingResults = true;
 
         let targetContainer = document.getElementById("targetContainer");
 
@@ -61,7 +69,7 @@ function submitGuess(g) {
 
         let resultsContainer = document.getElementById("resultsContainer");
 
-        resultsContainer.style.display = "flex";
+        resultsContainer.classList.remove("displayHidden");
 
         // canvas.parent("resultsSketch");
 
@@ -70,7 +78,7 @@ function submitGuess(g) {
         userScores = [];
     }
 
-    targetCounter.innerHTML = targetInc + " out of 6";
+    targetCounter.innerHTML = targetInc + " out of " + MAX_GAMES;
 }
 
 function showResults() {
@@ -80,7 +88,7 @@ function showResults() {
 
     for (let i = 0; i < userScores.length; i++) {
         let node = document.createElement("div");
-        node.innerHTML = i + 1 + ". Actual: " + userScores[i].actualScore + ", Guess " + userScores[i].userGuess;
+        node.innerHTML = i + 1 + ". Actual: " + userScores[i].actualScore + ", Guess: " + userScores[i].userGuess;
 
         if (userScores[i].actualScore == userScores[i].userGuess) {
             node.style.color = "green";
@@ -93,6 +101,8 @@ function showResults() {
 }
 
 document.addEventListener("keydown", (e) => {
+    if (showingResults) return;
+
     if (e.key === "Enter") {
         return submitGuess(+document.getElementById("typingBox").value);
     }
@@ -100,7 +110,7 @@ document.addEventListener("keydown", (e) => {
 
 function newgame() {
     let targetCounter = document.getElementById("targetCounter");
-    targetCounter.innerHTML = "0 out of 5";
+    targetCounter.innerHTML = "1 out of " + MAX_GAMES;
     targetInc = 0;
 
     buffer = createGraphics(width, height);
@@ -115,7 +125,17 @@ function newgame() {
 
     let resultsContainer = document.getElementById("resultsContainer");
 
-    resultsContainer.style.display = "none";
+    resultsContainer.classList.add("displayHidden");
 
-    canvas.parent("sketch");
+    showingResults = false;
+}
+
+function startGame() {
+    let targetContainer = document.getElementById("targetContainer");
+
+    targetContainer.classList.remove("blurred");
+
+    let startGameButton = document.getElementById("startGameButton");
+
+    startGameButton.classList.add("displayHidden");
 }
